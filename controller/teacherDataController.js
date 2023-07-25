@@ -23,6 +23,16 @@ const newData = async (req, res) => {
   }
 };
 
+const getAllTeachers = (req, res) => {
+  TeacherData.find()
+    .then((teacher) => {
+      res.json({ getAllTeachers: teacher });
+    })
+    .catch((err) => {
+      res.send(" no teacher: " + err.message);
+    });
+};
+
 const findDataById = async (req, res) => {
   try {
     let data = await TeacherData.findById(req.params.Id);
@@ -44,5 +54,6 @@ const deleteDataById = async (req, res) => {
 module.exports = {
   newData,
   findDataById,
+  getAllTeachers,
   deleteDataById,
 };
