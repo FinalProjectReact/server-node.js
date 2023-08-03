@@ -14,8 +14,9 @@ const newUser = async (req, res) => {
   });
   try {
     await myUser.save();
-    res.json({ newUser: myUser });
+    res.json({ newUser: req.body });
   } catch (error) {
+    //cnsole
     res.send("Cannot save new user: " + error.message);
   }
 };

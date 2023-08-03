@@ -17,7 +17,7 @@ const newData = async (req, res) => {
     });
 
     await myData.save();
-    res.status(200).json({ newData: myData });
+    res.status(200).json({ newData: req.body });
   } catch (error) {
     res.status(500).json({ error: "Cannot save new data: " + error.message });
   }

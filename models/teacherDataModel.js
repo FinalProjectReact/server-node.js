@@ -8,7 +8,7 @@ const dataSchema = mongoose.Schema({
   numStr: { type: String, require },
   status: { type: Boolean, require: true },
   aboutMe: { type: String, require },
-  lessonPlace: { type: String, require },
+  lessonPlace: [{ type: String, require }],
 
   // categories: [
   //   {
