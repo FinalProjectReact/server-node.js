@@ -3,9 +3,10 @@ const user = require("../models/userModel");
 const category = require("../models/categoryModel");
 
 const newData = async (req, res) => {
+  console.log("teacherrrrrr" , req.body)
   try {
     let myData = new TeacherData({
-      userId: user._id,
+      userId:req.body.userId,
       dateBirth: req.body.dateBirth,
       city: req.body.city,
       str: req.body.str,
@@ -13,18 +14,19 @@ const newData = async (req, res) => {
       status: req.body.status,
       aboutMe: req.body.aboutMe,
       lessonPlace: req.body.lessonPlace,
-      //categories: [category._id,],
+      categories: req.body.categories,
     });
 
     await myData.save();
-    res.status(200).json({ newData: req.body });
+    console.log("myData", myData)
+    res.status(200).send(myData);
   } catch (error) {
     res.status(500).json({ error: "Cannot save new data: " + error.message });
   }
 };
 
 const getAllTeachers = (req, res) => {
-  TeacherData.find()
+  TeacherData.find().populate('userId')
     .then((teacher) => {
       res.json({ getAllTeachers: teacher });
     })

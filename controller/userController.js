@@ -14,7 +14,7 @@ const newUser = async (req, res) => {
   });
   try {
     await myUser.save();
-    res.json({ newUser: req.body });
+    res.send(myUser);
   } catch (error) {
     //cnsole
     res.send("Cannot save new user: " + error.message);
@@ -25,7 +25,7 @@ const findUserByName = async (req, res) => {
     if(isUser) {
       res.status(200).json({ user: isUser });
     }
-      else res.status(400).send("my error: " + err);
+      else res.status(400).send("my error");
   }
 
 
