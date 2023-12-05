@@ -9,7 +9,8 @@ const dataSchema = mongoose.Schema({
   status: { type: Boolean, require: true },
   aboutMe: { type: String, require },
   lessonPlace: [{ type: String, require }],
-
+  turns:[{type:String}]
+  
   // categories: [
   //   {
   //     categoryId: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
@@ -17,4 +18,4 @@ const dataSchema = mongoose.Schema({
   // ],
 });
 
-module.exports = mongoose.model("TeacherData", dataSchema);
+module.exports = mongoose.model("Teacher", dataSchema);

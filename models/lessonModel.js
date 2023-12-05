@@ -9,7 +9,8 @@ const lessonSchema = mongoose.Schema({
           categoryId: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
         },
       ],
-    status: { type: Boolean, default: true }
+    status: { type: Boolean, default: false },
+    text:{type:String}
 }) 
 
 module.exports = mongoose.model("Lesson", lessonSchema)

@@ -2,6 +2,7 @@ const User = require("../models/userModel");
 
 //add a new user teacher/pupil
 const newUser = async (req, res) => {
+  console.log(req.userName);
 
   console.log('in newUser');
   let myUser = new User({
@@ -21,12 +22,16 @@ const newUser = async (req, res) => {
   }
 };
 const findUserByName = async (req, res) => {
+  console.log("req",req.mail);
   let isUser = await User.findOne({ mail: req.body.mail, password: req.body.password })
     if(isUser) {
       res.status(200).json({ user: isUser });
     }
-      else res.status(400).send("my error");
-  }
+      else{
+        console.log("___")
+        res.status(400).send("my error");
+      }
+  };
 
 
 const findUserById = async (req, res) => {

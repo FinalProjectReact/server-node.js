@@ -9,7 +9,6 @@ app.use(cors())
 
 const bodyParser = require('body-parser')//יבוא ספריה להמרה לגיסון את מה שמגיע מהקליינט
 app.use(bodyParser.json())// מימוש שלו
- 
 
 const mongoose = require('mongoose')//התקנת ספריה להתחברות למונגו
 
@@ -42,8 +41,6 @@ app.use('/lesson', lessonRouter)
 
 const categoryRouter = require('./routes/categoryRouter')
 app.use('/category', categoryRouter)
-
-
 
 app.listen(8000, () => {
     console.log('listening- 3030');
