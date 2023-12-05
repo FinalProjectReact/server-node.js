@@ -45,6 +45,6 @@ app.use('/category', categoryRouter)
 
 
 
-app.listen(3030, () => {
+app.listen(8000, () => {
     console.log('listening- 3030');
 })
