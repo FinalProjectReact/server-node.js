@@ -3,10 +3,10 @@ const user = require("../models/userModel");
 const category = require("../models/categoryModel");
 
 const newData = async (req, res) => {
-  console.log("teacherrrrrr" , req.body)
+  console.log("teacherrrrrr", req.body);
   try {
     let myData = new TeacherData({
-      userId:req.body.userId,
+      userId: req.body.userId,
       dateBirth: req.body.dateBirth,
       city: req.body.city,
       str: req.body.str,
@@ -18,27 +18,27 @@ const newData = async (req, res) => {
     });
 
     await myData.save();
-    console.log("myData", myData)
+    console.log("myData", myData);
     res.status(200).send(myData);
   } catch (error) {
     res.status(500).json({ error: "Cannot save new data: " + error.message });
   }
 };
 const addTurn = async (req, res) => {
-  console.log(req.body)
+  console.log(req.body);
   const { id, message } = req.body;
-  console.log(id)
+  console.log(id);
 
   try {
     // Find the teacher data by ID
     let teacherData = await TeacherData.findById(id);
-    console.log("ttt"+teacherData)
+    console.log("ttt" + teacherData);
     if (!teacherData) {
       return res.status(404).json({ error: "Teacher not found" });
     }
 
     // Add the turn to the turns array
-    teacherData.turns.push( message.toString());
+    teacherData.turns.push(message.toString());
 
     // Save the updated teacher data
     await teacherData.save();
@@ -49,7 +49,8 @@ const addTurn = async (req, res) => {
   }
 };
 const getAllTeachers = (req, res) => {
-  TeacherData.find().populate('userId')
+  TeacherData.find()
+    .populate("userId")
     .then((teacher) => {
       res.json({ getAllTeachers: teacher });
     })
@@ -60,8 +61,14 @@ const getAllTeachers = (req, res) => {
 
 const findDataById = async (req, res) => {
   try {
-    let data = await TeacherData.findById(req.params.Id);
-    res.status(200).json({ getDataById: data });
+    let data = await TeacherData.findOne({ userId: req.body.userId });
+
+    if (data) {
+      res.status(200).send(data);
+      console.log(data);
+    } else {
+      res.status(400).send("Cannot find this data: " + error.message);
+    }
   } catch (error) {
     res.send("Cannot find this data: " + error.message);
   }
