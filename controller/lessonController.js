@@ -4,19 +4,20 @@ const teacher = require("../models/teacherDataModel");
 
 const category = require("../models/categoryModel");
 const mongoose = require('mongoose');
+
 const newLesson = async (req, res) => {
   // כאן יש להוסיף יישום הפרטים מהבקשה כגון id_teacher ו-id_pupil
   let myLesson = new lesson({
     id_teacher: req.body.id_teacher,
     id_pupil: req.body.id_pupil,
     categories: req.body.categories, // אם יש צורך לשלוח קטגוריות
-    status: false,
+    status: req.body.status,
     text:req.body.text
   });
 
   try {
     await myLesson.save();
-    res.json({ newLesson: myLesson });
+    res.send(myLesson);
   } catch (error) {
     res.status(500).send("Cannot save new Lesson: " + error.message);
   }
@@ -30,15 +31,18 @@ const findLessonById = async (req, res) => {
     res.send("Cannot find lesson: " + error.message);
   }
 };
+
 const getAllLessons = (req, res) => {
   lesson.find().populate('id_pupil').populate('id_teacher')
     .then((lessons) => {
       res.json({ getAllLessons: lessons });
+      console.log(getAllLessons);
     })
     .catch((err) => {
       res.send(" no lessons: " + err.message);
     });
 };
+
 const getAllLessonsByTeacherId = (req, res) => {
   const pupilId = req.params.teacherId; // אנחנו מניחים שה־id של התלמיד יתקבל דרך ה-URL, עליך לוודא שזה מגיע כראוי
   lesson.find({ id_pupil: pupilId })
@@ -49,6 +53,7 @@ const getAllLessonsByTeacherId = (req, res) => {
       res.send(" no lessons: " + err.message);
     });
 };
+
 const getAllLessonsByPupilId = (req, res) => {
   const pupilId = req.params.pupilId; // אנחנו מניחים שה־id של התלמיד יתקבל דרך ה-URL, עליך לוודא שזה מגיע כראוי
   lesson.find({ id_pupil: pupilId })
@@ -59,6 +64,7 @@ const getAllLessonsByPupilId = (req, res) => {
       res.send(" no lessons: " + err.message);
     });
 };
+
 const deleteLessonById = async (req, res) => {
   try {
     let lesson = await lesson.findByIdAndDelete(req.params.Id);
@@ -67,6 +73,7 @@ const deleteLessonById = async (req, res) => {
     res.send("Cannot find this lesson");
   }
 };
+
 const updateStatus = async (req, res) => {
   console.log(req.body.status)
   try {

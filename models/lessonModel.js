@@ -4,11 +4,7 @@ const lessonSchema = mongoose.Schema({
 
     id_teacher: { type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     id_pupil:{ type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    categories: [
-        {
-          categoryId: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
-        },
-      ],
+    categories:[{type: String, require}],
     status: { type: Boolean, default: false },
     text:{type:String}
 }) 
