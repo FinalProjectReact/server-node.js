@@ -2,8 +2,15 @@ const User = require("../models/userModel");
 
 //add a new user teacher/pupil
 const newUser = async (req, res) => {
-  console.log(req.userName);
+  console.log(req.body);
 
+  try {
+  const existUser = await User.findOne({mail:req.body.mail});
+  console.log(9, existUser);
+  if(existUser){
+    res.status(500).json("נמצא מייל זהה")
+  }
+  else{
   console.log('in newUser');
   let myUser = new User({
     userName: req.body.userName,
@@ -13,17 +20,19 @@ const newUser = async (req, res) => {
     gender: req.body.gender,
     status: req.body.status,
   });
-  try {
     await myUser.save();
     res.send(myUser);
+    }
   } catch (error) {
+    console.log(error);
     //cnsole
     res.send("Cannot save new user: " + error.message);
   }
 };
 const findUserByName = async (req, res) => {
-  console.log("req",req.mail);
+  console.log("req",req.body);
   let isUser = await User.findOne({ mail: req.body.mail, password: req.body.password })
+  console.log(isUser);
     if(isUser) {
       res.status(200).json({ user: isUser });
     }
